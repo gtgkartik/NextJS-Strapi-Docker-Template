@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "aas",
+  "info": {
+    "singularName": "aa",
+    "pluralName": "aas",
+    "displayName": "aa"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "aa": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
