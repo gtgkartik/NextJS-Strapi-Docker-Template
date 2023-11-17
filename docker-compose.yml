@@ -1,9 +1,20 @@
 version: '3'
+# starting with services, we can run many services like frontend backend and db etc...
 services:
-
+  nextapp:  #this is the name of the service which is random string
+    build:  #we build the Image for the service
+      context: ./dockernextapp
+      dockerfile: Dockerfile
+    container_name: nextjs14
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./dockernextapp:/frontend
+      - /frontend/node_modules 
+      
   strapi:
     container_name: strapi
-    build: .
+    build: ./strapibackend
     image: strapi:latest
     restart: unless-stopped
     env_file: .env
@@ -18,13 +29,13 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       NODE_ENV: ${NODE_ENV}
     volumes:
-      - ./config:/opt/app/config
-      - ./src:/opt/app/src
-      - ./package.json:/opt/package.json
-      - ./package-lock.json:/opt/package-lock.json
+      - ./strapibackend/config:/opt/app/config
+      - ./strapibackend/src:/opt/app/src
+      - ./strapibackend/package.json:/opt/package.json
+      - ./strapibackend/package-lock.json:/opt/package-lock.json
 
-      - ./.env:/opt/app/.env
-      - ./public/uploads:/opt/app/public/uploads
+      - ./strapibackend/.env:/opt/app/.env
+      - ./strapibackend/public/uploads:/opt/app/public/uploads
     ports:
       - '1337:1337'
     networks:
@@ -46,7 +57,7 @@ services:
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_ROOT_HOST: '%'
     volumes:
-      - strapi-data:/var/lib/mysql
+      - ./strapibackend/strapi-data:/var/lib/mysql
       #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
     ports:
       - '3306:3306'
