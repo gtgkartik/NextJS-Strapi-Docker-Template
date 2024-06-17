@@ -1,0 +1,1 @@
+####### NextJS-Strapi-Docker-Template
